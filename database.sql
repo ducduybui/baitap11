@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `servletcrudmvc` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `servletcrudmvc`;
 -- MySQL dump 10.13  Distrib 8.0.46, for Win64 (x86_64)
 --
 -- Host: localhost    Database: servletcrudmvc
@@ -45,6 +43,67 @@ INSERT INTO `category` VALUES (1,'WEB','Lập trình Web','https://via.placehold
 UNLOCK TABLES;
 
 --
+-- Table structure for table `orderdetails`
+--
+
+DROP TABLE IF EXISTS `orderdetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orderdetails` (
+  `OrderDetailId` int NOT NULL AUTO_INCREMENT,
+  `Price` double DEFAULT NULL,
+  `Quantity` int DEFAULT NULL,
+  `OrderId` int DEFAULT NULL,
+  `VideoId` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`OrderDetailId`),
+  KEY `FK2gx7xy70r5p6sg5rocuus6kyy` (`OrderId`),
+  KEY `FKpo1bxrlijj5dl38pgfi004g5k` (`VideoId`),
+  CONSTRAINT `FK2gx7xy70r5p6sg5rocuus6kyy` FOREIGN KEY (`OrderId`) REFERENCES `orders` (`OrderId`),
+  CONSTRAINT `FKpo1bxrlijj5dl38pgfi004g5k` FOREIGN KEY (`VideoId`) REFERENCES `videos` (`Videold`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orderdetails`
+--
+
+LOCK TABLES `orderdetails` WRITE;
+/*!40000 ALTER TABLE `orderdetails` DISABLE KEYS */;
+INSERT INTO `orderdetails` VALUES (1,1000,1,1,'v01'),(2,1000,1,2,'v01'),(3,1000,1,3,'v01'),(4,1000,1,4,'v01'),(5,1000,1,5,'v01');
+/*!40000 ALTER TABLE `orderdetails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orders` (
+  `OrderId` int NOT NULL AUTO_INCREMENT,
+  `OrderDate` datetime(6) DEFAULT NULL,
+  `PaymentMethod` varchar(50) DEFAULT NULL,
+  `Status` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `TotalAmount` double DEFAULT NULL,
+  `UserId` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`OrderId`),
+  KEY `FKlj9lgmu9u65vgmm6a9tmnjry7` (`UserId`),
+  CONSTRAINT `FKlj9lgmu9u65vgmm6a9tmnjry7` FOREIGN KEY (`UserId`) REFERENCES `users` (`Username`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,'2026-10-04 20:04:03.476000','COD','Đã xác nhận',1000,'admin'),(2,'2026-10-04 20:04:13.093000','COD','Vận chuyển',1000,'admin'),(3,'2026-10-04 20:04:15.732000','COD','Đơn hàng hủy',1000,'admin'),(4,'2026-10-04 20:36:54.712000','COD','Mới',1000,'admin'),(5,'2026-10-04 20:41:38.315000','COD','Mới',1000,'admin');
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -70,7 +129,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('buiducduy',_binary '\0',_binary '\0',NULL,NULL,NULL,'123',NULL);
+INSERT INTO `users` VALUES ('admin',_binary '',_binary '\0',NULL,NULL,NULL,'123456',NULL),('bin',_binary '',_binary '\0',NULL,NULL,NULL,'123456',NULL),('buiducduy',_binary '',_binary '\0',NULL,NULL,NULL,'123',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,4 +171,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-09-23 10:37:13
+-- Dump completed on 2026-10-06 13:19:03

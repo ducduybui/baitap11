@@ -64,4 +64,17 @@ public class OrderServiceImpl_24110177 implements OrderService_24110177 {
             en.close();
         }
     }
+    @Override
+    public List<Order_24110177> findByUserIdAndStatus(String username, String status) {
+        EntityManager en = JPAConfig_24110177.getEntityManager();
+        try {
+            TypedQuery<Order_24110177> query = en.createQuery(
+                "SELECT o FROM Order_24110177 o WHERE o.user.username = :username AND o.status = :status", Order_24110177.class);
+            query.setParameter("username", username);
+            query.setParameter("status", status);
+            return query.getResultList();
+        } finally {
+            en.close();
+        }
+    }
 }

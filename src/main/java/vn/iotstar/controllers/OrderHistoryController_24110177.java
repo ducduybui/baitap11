@@ -28,9 +28,20 @@ public class OrderHistoryController_24110177 extends HttpServlet {
             return;
         }
 
-        // Truy vấn danh sách đơn hàng dựa vào username của user đang đăng nhập
-        List<Order_24110177> orders = orderService.findByUserId(user.getUsername());
+        // Lấy tham số status từ URL
+        String status = req.getParameter("status");
+        List<Order_24110177> orders;
+
+        // Nếu có chọn lọc trạng thái và không phải "all"
+        if (status != null && !status.isEmpty() && !status.equals("all")) {
+            orders = orderService.findByUserIdAndStatus(user.getUsername(), status);
+        } else {
+            orders = orderService.findByUserId(user.getUsername());
+            status = "all"; // gán mặc định để hiển thị đúng trên thẻ select
+        }
+
         req.setAttribute("orders", orders);
+        req.setAttribute("selectedStatus", status); // Lưu trạng thái đang chọn để View giữ nguyên giá trị
 
         req.getRequestDispatcher("/views/user/order-history.jsp").forward(req, resp);
     }
